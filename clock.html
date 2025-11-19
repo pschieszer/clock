@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Clock</title>
+  </head>
+  <body>
+    <svg
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.0"
+      id="clock"
+      style="background-color: black"
+      viewbox="0 0 300 300"
+    >
+      <filter id="blurMe">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" />
+      </filter>
+      <circle
+        cx="150"
+        cy="150"
+        r="125"
+        fill="white"
+        stroke="green"
+        stroke-width="3"
+        filter="url(#blurMe)"
+      />
+    </svg>
+    <script type="text/javascript" src="clock.js"></script>
+  </body>
+</html>
