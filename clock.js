@@ -55,7 +55,7 @@ const buildTimes = () => {
 const buildSvgTag = () => {
 	const result = document.createElementNS("http://www.w3.org/2000/svg", "g");
   const hours = clockSpots(12);
-  hours.map((x, ndx) => drawTextCell(x.x * secondsLength() + (radius - 5), x.y * secondsLength() + (radius + 5), `hour${ndx}`, ndx * 30, `${(ndx > 0) ? ndx : 12}`))
+  hours.map((x, ndx) => drawTextCell(x.x * secondsLength() + radius, x.y * secondsLength() + radius, `hour${ndx}`, ndx * 30, `${(ndx > 0) ? ndx : 12}`))
     .forEach(x => result.appendChild(x));
 
   const { hourEndpoint, minuteEndpoint, secondEndpoint } = buildTimes();
@@ -121,12 +121,21 @@ const checkWakeLock = () =>
 	 navigator.wakeLock.request('screen').then(wakeLockSuccess, wakeLockCatch)) ||
 	console.log(`wakeLock not requested`);
 
+const adjustTextPosition = (textElement) => {
+    const bbox = textElement.getBBox();
+    const newX = parseFloat(textElement.getAttribute('x')) - (bbox.width / 2);
+    const newY = parseFloat(textElement.getAttribute('y')) + (bbox.height / 4);
+    textElement.setAttribute('x', newX);
+    textElement.setAttribute('y', newY);
+}
+
 const viewHeight = getHeight();
 const viewWidth = getWidth();
 const svgTag = getCurrentSvg();
 svgTag.setAttribute('height', viewHeight);
 svgTag.setAttribute('width', viewWidth);
 svgTag.appendChild(buildSvgTag());
+[...svgTag.getElementsByTagNameNS("http://www.w3.org/2000/svg", "text")].forEach(adjustTextPosition);
 
 const requestedBackgroundColor = getParam('backgroundColor');
 if (requestedBackgroundColor) {
