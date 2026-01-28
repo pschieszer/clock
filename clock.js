@@ -78,6 +78,7 @@ const updateHands = () => {
   document.getElementById('secondHand').setAttribute('y2', secondEndpoint.y * secondsLength() + radius);
   const secondColor = seconds * 6 + Math.floor(minuteColor % 5);
   document.getElementById('secondHand').setAttribute('stroke', `hsl(${secondColor} 100% 50%)`);
+  setFavicon(getCurrentSvg())
 }
 
 const updateBackground = () => svgTag.style.backgroundColor = `hsl(${((buildTimes().seconds * 6) + 180) % 360} 100% 50%)`;
@@ -127,6 +128,13 @@ const adjustTextPosition = (textElement) => {
     const newY = parseFloat(textElement.getAttribute('y')) + (bbox.height / 4);
     textElement.setAttribute('x', newX);
     textElement.setAttribute('y', newY);
+}
+
+const setFavicon = (svgTag) => {
+  const link = document.querySelector("link[rel~='icon']");
+  if (link) {
+    link.href = `data:image/svg+xml,${encodeURIComponent(svgTag.outerHTML)}`;
+  }
 }
 
 const viewHeight = getHeight();
