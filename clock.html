@@ -4,26 +4,23 @@
     <link rel="icon">
   </head>
   <body>
-    <svg
-      xmlns:svg="http://www.w3.org/2000/svg"
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.0"
-      id="clock"
-      style="background-color: black"
-      viewbox="0 0 300 300"
-    >
-      <filter id="blurMe">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" />
+    <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
+      version="1.0" id="clock" style="background-color: black" viewbox="0 0 300 300">
+      <filter id="textShadow-0" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="0.7" result="blurredAlpha" />
+        <feFlood flood-color="hsl(0 100% 50%)" result="floodColor"/>
+        <feComposite in="floodColor" in2="blurredAlpha" operator="in" result="coloredBlur"/>
+        <feOffset in="coloredBlur" dx="0" dy="0" result="offsetBlur"/>
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="1.3" />
+        </feComponentTransfer>
+        <feMerge>
+          <feMergeNode />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
       </filter>
-      <circle
-        cx="150"
-        cy="150"
-        r="125"
-        fill="white"
-        stroke="green"
-        stroke-width="3"
-        filter="url(#blurMe)"
-      />
+      <circle cx="150" cy="150" r="125" fill="white" stroke="hsl(120 100% 20%)"
+              stroke-width="4" />
     </svg>
     <script type="text/javascript" src="clock.js"></script>
   </body>
